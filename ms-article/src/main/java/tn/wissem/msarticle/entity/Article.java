@@ -16,4 +16,5 @@ public class Article extends BaseEntity
 {
     private String name;
     private int qtite;
+    private long stockId;
 }

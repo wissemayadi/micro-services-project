@@ -12,7 +12,7 @@ import java.time.LocalDate;
 public class BaseEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idBaseEntity")
+    @Column(name = "id")
     @Setter(AccessLevel.NONE)
     private Long id;
     private LocalDate date;
