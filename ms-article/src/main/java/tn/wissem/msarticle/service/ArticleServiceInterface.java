@@ -1,5 +1,6 @@
 package tn.wissem.msarticle.service;
 
+import dto.articleDto;
 import tn.wissem.msarticle.entity.Article;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public interface ArticleServiceInterface {
 
    Article deleteArticle(Long id);
 
-   Article getArticleById(Long id);
+   articleDto getArticleById(Long id);
 
    List<Article> findAllArticles();
 }

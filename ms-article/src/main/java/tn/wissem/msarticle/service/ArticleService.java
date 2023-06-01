@@ -1,10 +1,13 @@
 package tn.wissem.msarticle.service;
+import dto.articleDto;
+import dto.stockDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import org.springframework.util.ReflectionUtils;
 import tn.wissem.msarticle.entity.Article;
+import tn.wissem.msarticle.mapper.ArticleMapper;
 import tn.wissem.msarticle.repository.ArticleRepository;
 import java.lang.reflect.Field;
 import java.time.LocalDate;
@@ -17,6 +20,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ArticleService implements  ArticleServiceInterface{
     private final  ArticleRepository articleRepository;
+    private final ArticleMapper articleMapper;
+    private final IStockDto stockDto;
     @Override
     public Article createArticle(Article article) {
         article.setCreatedAt(LocalDate.now());
@@ -43,10 +48,17 @@ public class ArticleService implements  ArticleServiceInterface{
     }
 
     @Override
-    public Article getArticleById(Long id) {
+    public articleDto getArticleById(Long id) {
+//        Optional <Article> article = articleRepository.findById(id);
+//        Assert.isTrue(article.isPresent(),"Article not found with this id");
+//        return article.get();
+
         Optional <Article> article = articleRepository.findById(id);
-        Assert.isTrue(article.isPresent(),"Article not found with this id");
-        return article.get();
+        Assert.isTrue(article.isPresent(),"Article not found");
+        stockDto stockDto1 = stockDto.retrieveStockById(article.get().getStockId());
+        articleDto articleDtos = articleMapper.articleToArticleDto(article.get(),stockDto1);
+
+        return articleDtos;
     }
 
     @Override

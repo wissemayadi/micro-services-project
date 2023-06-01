@@ -1,5 +1,6 @@
 package tn.wissem.msarticle.controller;
 
+import dto.articleDto;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public Article getArticleById(@PathVariable Long id) {
+    public articleDto getArticleById(@PathVariable Long id) {
         return articleService.getArticleById(id);
     }
 
