@@ -1,7 +1,6 @@
 package tn.wissem.msarticle.service;
 import dto.articleDto;
 import dto.stockDto;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
@@ -21,7 +20,7 @@ import java.util.Optional;
 public class ArticleService implements  ArticleServiceInterface{
     private final  ArticleRepository articleRepository;
     private final ArticleMapper articleMapper;
-    private final IStockDto stockDto;
+    private final IStockFeignClient stockFeignClient;
     @Override
     public Article createArticle(Article article) {
         article.setCreatedAt(LocalDate.now());
@@ -55,7 +54,7 @@ public class ArticleService implements  ArticleServiceInterface{
 
         Optional <Article> article = articleRepository.findById(id);
         Assert.isTrue(article.isPresent(),"Article not found");
-        stockDto stockDto1 = stockDto.retrieveStockById(article.get().getStockId());
+        stockDto stockDto1 = stockFeignClient.retrieveStockById(article.get().getStockId());
         articleDto articleDtos = articleMapper.articleToArticleDto(article.get(),stockDto1);
 
         return articleDtos;
